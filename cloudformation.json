@@ -1,0 +1,81 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "The API Gateway and Lambda function CFT for the svcomp-badge-service",
+  "Parameters": {
+      "HashKeyElementName": {
+          "Type": "String",
+          "Default": "id",
+          "Description": "Hash Key Name"
+      },
+      "HashKeyElementType": {
+          "Type": "String",
+          "Default": "S",
+          "Description": "Hash Key Type"
+      }
+  },
+  "Resources": {
+      "FunctionGet": {
+          "Type": "AWS::Lambda::Function",
+          "Properties": {
+              "FunctionName": "svcomp-badge-service",
+              "Handler": "index.lambda_handler",
+              "Runtime": "python3.7",
+              "Code": {
+                  "ZipFile": "import json\ndef handler(event, context) :\n  print(\"Event: %s\" % json.dumps(event))\n"
+              },
+              "Role": {
+                  "Fn::GetAtt": [
+                      "LambdaExecutionRole",
+                      "Arn"
+                  ]
+              },
+              "Timeout": "2"
+          },
+          "DependsOn": [
+              "LambdaExecutionRole"
+          ]
+      },
+      "LambdaExecutionRole": {
+          "Type": "AWS::IAM::Role",
+          "Properties": {
+              "Policies": [
+                  {
+                      "PolicyName": "LambdaPolicy",
+                      "PolicyDocument": {
+                          "Version": "2012-10-17",
+                          "Statement": [
+                              {
+                                  "Action": [
+                                      "logs:CreateLogGroup",
+                                      "logs:CreateLogStream",
+                                      "logs:PutLogEvents"
+                                  ],
+                                  "Resource": [
+                                      "arn:aws:logs:*:*:*"
+                                  ],
+                                  "Effect": "Allow"
+                              }
+                          ]
+                      }
+                  }
+              ],
+              "AssumeRolePolicyDocument": {
+                  "Version": "2012-10-17",
+                  "Statement": [
+                      {
+                          "Action": [
+                              "sts:AssumeRole"
+                          ],
+                          "Effect": "Allow",
+                          "Principal": {
+                              "Service": [
+                                  "lambda.amazonaws.com"
+                              ]
+                          }
+                      }
+                  ]
+              }
+          }
+      }
+  }
+}

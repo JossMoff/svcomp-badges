@@ -1,18 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "The API Gateway and Lambda function CFT for the svcomp-badge-service",
-  "Parameters": {
-      "HashKeyElementName": {
-          "Type": "String",
-          "Default": "id",
-          "Description": "Hash Key Name"
-      },
-      "HashKeyElementType": {
-          "Type": "String",
-          "Default": "S",
-          "Description": "Hash Key Type"
-      }
-  },
   "Resources": {
       "FunctionGet": {
           "Type": "AWS::Lambda::Function",

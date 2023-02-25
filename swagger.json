@@ -1,0 +1,96 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "SVCOMP Badges API",
+        "description": "This API is used to integrate with sheilds.io to provide badges for different SVCOMP categories.",
+        "contact": {
+            "email": "josshmoffatt@gmail.com"
+        }
+    },
+    "license": {
+        "name": "MIT"
+    },
+    "paths": {
+        "/badge/{year}": {
+            "get": {
+                "description": "Returns the formatting for a sheilds.io badge for a given SVCOMP category in a given year",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "year",
+                        "in": "path",
+                        "description": "The year of the SVCOMP results",
+                        "required": true,
+                        "type": "int"
+                    },
+                    {
+                        "name": "category",
+                        "in": "query",
+                        "description": "Category name as given on SVCOMP website",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "position",
+                        "in": "query",
+                        "description": "The position for the verifier/validator in the given category",
+                        "required": true,
+                        "schema": {
+                            "type": "int",
+                            "enum": [
+                                1,
+                                2,
+                                3
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Format response",
+                        "schema": {
+                            "$ref": "#/definitions/Format"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request. The category and the position must be valid."
+                    },
+                    "404": {
+                        "description": "A year with that specific value was not found."
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Format": {
+            "type": "object",
+            "required": [
+                "schemaVersion",
+                "label",
+                "message",
+                "color",
+                "labelColor"
+            ],
+            "properties": {
+                "schemaVersion": {
+                    "type": "string"
+                },
+                "label": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "color": {
+                    "type": "string"
+                },
+                "labelColor": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

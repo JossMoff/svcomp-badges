@@ -3,12 +3,13 @@
   "info": {
     "title": "SVCOMP Badges API",
     "description": "This API is used to integrate with sheilds.io to provide badges for different SVCOMP categories.",
+    "version": "1.0.0",
     "contact": {
       "email": "josshmoffatt@gmail.com"
+    },
+    "license": {
+      "name": "MIT"
     }
-  },
-  "license": {
-    "name": "MIT"
   },
   "paths": {
     "/badge/{year}": {
@@ -23,7 +24,8 @@
             "in": "path",
             "description": "The year of the SVCOMP results",
             "required": true,
-            "type": "int"
+            "type": "integer",
+            "format": "int64"
           },
           {
             "name": "category",
@@ -46,49 +48,51 @@
               ]
             }
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Format response",
-            "schema": {
-              "$ref": "#/definitions/Format"
-            }
-          },
-          "400": {
-            "description": "Bad request. The category and the position must be valid."
-          },
-          "404": {
-            "description": "A year with that specific value was not found."
+        ]
+      },
+      "responses": {
+        "200": {
+          "description": "Format response",
+          "schema": {
+            "$ref": "#/components/schemas/Format"
           }
+        },
+        "400": {
+          "description": "Bad request. The category and the position must be valid."
+        },
+        "404": {
+          "description": "A year with that specific value was not found."
         }
       }
     }
   },
-  "definitions": {
-    "Format": {
-      "type": "object",
-      "required": [
-        "schemaVersion",
-        "label",
-        "message",
-        "color",
-        "labelColor"
-      ],
-      "properties": {
-        "schemaVersion": {
-          "type": "string"
-        },
-        "label": {
-          "type": "string"
-        },
-        "message": {
-          "type": "string"
-        },
-        "color": {
-          "type": "string"
-        },
-        "labelColor": {
-          "type": "string"
+  "components": {
+    "schemas": {
+      "Format": {
+        "type": "object",
+        "required": [
+          "schemaVersion",
+          "label",
+          "message",
+          "color",
+          "labelColor"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string"
+          },
+          "labelColor": {
+            "type": "string"
+          }
         }
       }
     }

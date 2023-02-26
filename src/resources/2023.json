@@ -1,0 +1,13 @@
+{
+  "categories": [
+    "ReachSafety", 
+    "MemSafety", 
+    "ConcurrencySafety",
+    "NoOverflows", 
+    "Termination", 
+    "SoftwareSystems", 
+    "FalsificationOverall", 
+    "Overall", 
+    "JavaOverall"
+  ]
+}
